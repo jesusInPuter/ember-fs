@@ -13,24 +13,6 @@ int main() {
     return 1;
   }
 
-  // char *A = malloc(BLOCK_SIZE);
-  // char *B = malloc(BLOCK_SIZE);
-  //
-  // memset(A, 'f', BLOCK_SIZE);
-  // memset(B, 'a', BLOCK_SIZE);
-  //
-  // for (int i = 0; i < BLOCK_COUNT; i++) {
-  //   if (i % 2 == 0) {
-  //     dwrite(the_disk_file, i, A);
-  //   } else {
-  //     dwrite(the_disk_file, i, B);
-  //   }
-  // }
-  //
-  // free(A);
-  // free(B);
-  //
-
   struct superBlock sb;
   memcpy(sb.magic_no, "jaibheem", 8);
   sb.blockSize = BLOCK_SIZE;
