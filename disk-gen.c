@@ -1,48 +1,7 @@
-#include <stddef.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "bit shenanigans.h"
+#include "disk.h"
+#include "fs-realtor.h"
 #include <string.h>
-
-#define DISK_SIZE (1024 * 1024)
-#define BLOCK_SIZE 4096
-#define BLOCK_COUNT (DISK_SIZE / BLOCK_SIZE)
-
-void dread(FILE *disk, int BLOCK_NO, void *buff) {
-  fseek(disk, BLOCK_NO * BLOCK_SIZE, SEEK_SET);
-  fread(buff, BLOCK_SIZE, 1, disk);
-}
-
-void dwrite(FILE *disk, int BLOCK_NO, const void *buff) {
-  fseek(disk, BLOCK_NO * BLOCK_SIZE, SEEK_SET);
-  fwrite(buff, BLOCK_SIZE, 1, disk);
-  fflush(disk);
-};
-
-void bit_set_used(uint8_t *bitmap, uint32_t BLOCK_NO) {
-  int byte_no = BLOCK_NO / 8;
-  int bit_no = BLOCK_NO % 8;
-  bitmap[byte_no] |= (1 << bit_no);
-};
-
-void bit_set_free(uint8_t *bitmap, uint32_t BLOCK_NO) {
-  int byte_no = BLOCK_NO / 8;
-  int bit_no = BLOCK_NO % 8;
-  bitmap[byte_no] &= ~(1 << bit_no);
-}
-
-int bit_status_chek(uint8_t *bitmap, uint32_t BLOCK_NO) {
-  int byte_no = BLOCK_NO / 8;
-  int bit_no = BLOCK_NO % 8;
-  return ((bitmap[byte_no] >> bit_no) & 1);
-}
-
-struct superBlock {
-  char magic_no[8];
-  uint32_t blockSize;
-  uint32_t noOfBlocks;
-  uint32_t blockPerGroup;
-};
 
 int main() {
 
@@ -73,23 +32,23 @@ int main() {
   //
 
   struct superBlock sb;
+  memcpy(sb.magic_no, "jaibheem", 8);
   sb.blockSize = BLOCK_SIZE;
   sb.blockPerGroup = 128;
   sb.noOfBlocks = BLOCK_COUNT;
+  sb.bitmap_location = 1;
 
-  memcpy(sb.magic_no, "jaibheem", 8);
-  char padded_buffer[BLOCK_SIZE];
+  char to_pad_buffer[BLOCK_SIZE];
 
-  memset(padded_buffer, 0, BLOCK_SIZE);
-  memcpy(padded_buffer, &sb, sizeof(sb));
-  dwrite(the_disk_file, 0, padded_buffer);
+  memset(to_pad_buffer, 0, BLOCK_SIZE);
+  memcpy(to_pad_buffer, &sb, sizeof(sb));
+  dwrite(the_disk_file, 0, to_pad_buffer);
 
   struct superBlock sb_viewer;
   char read_buffer[BLOCK_SIZE];
 
   dread(the_disk_file, 0, read_buffer);
   memcpy(&sb_viewer, read_buffer, sizeof(sb_viewer));
-  fclose(the_disk_file);
 
   if (memcmp(sb.magic_no, sb_viewer.magic_no, sizeof(sb.magic_no)) != 0) {
     printf("hell naaaaaa!\n");
@@ -101,5 +60,11 @@ int main() {
 
   int bitmap = 0;
 
+  bit_set_used(bitmap_block, 0);
+  bit_set_used(bitmap_block, 1);
+
+  dwrite(the_disk_file, 1, bitmap_block);
+
+  fclose(the_disk_file);
   return 0;
 }
