@@ -46,7 +46,14 @@ int main() {
   dread(the_disk_file, sb.bitmap_location, bitmap_block);
   int block_yes =
       gimme_a_free_block_in_and_mark_it(the_disk_file, bitmap_block);
-  printf("alocated block : %d\n", block_yes);
+
+  char buf[BLOCK_SIZE] = {0};
+  memcpy(buf, "hewwo emberfs", 13);
+  dwrite(the_disk_file, block_yes, buf);
+
+  char read_buf[BLOCK_SIZE] = {0};
+  dread(the_disk_file, block_yes, read_buf);
+  printf(read_buf); // maybe syntax warning but works
 
   fclose(the_disk_file);
   return 0;
