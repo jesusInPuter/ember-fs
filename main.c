@@ -53,7 +53,7 @@ int main() {
 
   char read_buf[BLOCK_SIZE] = {0};
   dread(the_disk_file, block_yes, read_buf);
-  printf(read_buf); // maybe syntax warning but works
+  printf("%s\n", read_buf);
 
   fclose(the_disk_file);
   return 0;
