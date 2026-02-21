@@ -2,31 +2,133 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ember-fs</title>
+
   <style>
-    body { font-family: sans-serif; line-height: 1.6; margin: 40px; }
-    code { background: #f4f4f4; padding: 2px 4px; }
-    a { color: #0366d6; text-decoration: none; }
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --accent: #f97316;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      padding: 3rem 1.5rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      max-width: 900px;
+      width: 100%;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+
+    .card {
+      background: var(--card);
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+    }
+
+    h2 {
+      margin-bottom: 1rem;
+      font-size: 1.25rem;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      margin-top: 3rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    code {
+      background: #0b1220;
+      padding: 3px 6px;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
   </style>
 </head>
+
 <body>
-  <h1>ember-fs</h1>
-  <p>This repository contains a simple filesystem project written in <strong>C</strong>.</p>
+  <div class="container">
 
-  <h2>Contents</h2>
-  <ul>
-    <li><a href="bit%20shenanigans.c">bit shenanigans.c</a> – source file</li>
-    <li><a href="disk.c">disk.c</a> – core disk logic</li>
-    <li><a href="disk-gen.c">disk-gen.c</a> – disk generator</li>
-    <li><a href="fs-realtor.c">fs-realtor.c</a> – filesystem logic</li>
-    <li><a href="disk.img">disk.img</a> – sample disk image</li>
-  </ul>
+    <h1>ember-fs</h1>
+    <p class="subtitle">
+      A low-level filesystem experiment written in C — built to understand storage from first principles.
+    </p>
 
-  <h2>About</h2>
-  <p>More details live in the source files. You can explore them via the GitHub UI.</p>
+    <div class="card">
+      <h2>📂 Source Files</h2>
+      <ul>
+        <li><a href="disk.c">disk.c</a> – disk abstraction layer</li>
+        <li><a href="disk-gen.c">disk-gen.c</a> – disk image generator</li>
+        <li><a href="fs-realtor.c">fs-realtor.c</a> – filesystem logic</li>
+        <li><a href="bit%20shenanigans.c">bit shenanigans.c</a> – bit-level operations</li>
+        <li><a href="disk.img">disk.img</a> – sample disk image</li>
+      </ul>
+    </div>
 
-  <footer style="margin-top: 40px; font-size: 0.9em; color: #555;">
-    <p>Hosted with GitHub Pages</p>
-  </footer>
+    <div class="card">
+      <h2>⚙️ Build</h2>
+      <p>
+        Compile using:
+      </p>
+      <pre><code>gcc *.c -o ember-fs</code></pre>
+    </div>
+
+    <div class="card">
+      <h2>🔥 Purpose</h2>
+      <p>
+        This project explores block storage, manual metadata management, and raw disk simulation.
+        It exists not for abstraction — but for understanding.
+      </p>
+    </div>
+
+    <footer>
+      Forged with C and curiosity. Hosted via GitHub Pages.
+    </footer>
+
+  </div>
 </body>
 </html>
