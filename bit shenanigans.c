@@ -1,4 +1,5 @@
 #include "bit shenanigans.h"
+
 // bit shenanigans
 void bit_set_used(uint8_t *bitmap, uint32_t BLOCK_NO) {
   int byte_no = BLOCK_NO / 8;

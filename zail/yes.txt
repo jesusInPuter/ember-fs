@@ -1,0 +1,3 @@
+Hi, this is a pointer testing file .
+there will be multiple things in this file/
+😀
